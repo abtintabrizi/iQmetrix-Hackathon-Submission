@@ -10,8 +10,10 @@ class SampleApp(tk.Tk):
         container.grid_rowconfigure(0, weight=1)
         container.grid_columnconfigure(0, weight=1)
 
+        self.title_font = tkfont.Font(family='Helvetica', size=18, weight="bold")
+
         self.frames = {}
-        for F in (StartPage, PageOne, PageTwo):
+        for F in (StartPage, EmployerPage, EmployeePage):
             page_name = F.__name__
             frame = F(parent=container, controller=self)
             self.frames[page_name] = frame
@@ -29,37 +31,36 @@ class StartPage(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.controller = controller
-        label = tk.Label(self, text="This is the start page")
-        label.pack(side="top", fill="x", pady=10)
+        self.configure(bg="light blue")
+        label = tk.Label(self, text="Employee Database", font=controller.title_font, bg="light blue")
+        label.pack(side="top", pady=75)
 
-        button1 = tk.Button(self, text="Go to Page One",
-                            command=lambda: controller.show_frame("PageOne"))
-        button2 = tk.Button(self, text="Go to Page Two",
-                            command=lambda: controller.show_frame("PageTwo"))
-        button1.pack()
+        button1 = tk.Button(self, text="Log In", width=40, height=4, bg="royal blue", borderwidth=0,
+                            command=lambda: controller.show_frame("EmployerPage"))
+        button2 = tk.Button(self, text="Sign Up", width=40, height=4, bg="royal blue", borderwidth=0,
+                            command=lambda: controller.show_frame("EmployeePage"))
+        button1.pack(pady=(0, 75))
         button2.pack()
 
 
-class PageOne(tk.Frame):
+class EmployerPage(tk.Frame):
 
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.controller = controller
-        label = tk.Label(self, text="This is page 1")
-        label.pack(side="top", fill="x", pady=10)
-        button = tk.Button(self, text="Go to the start page",
+        self.configure(bg="light blue")
+        button = tk.Button(self, text="Log Out", width=10, height=2, bg="royal blue", borderwidth=0,
                            command=lambda: controller.show_frame("StartPage"))
         button.pack()
 
 
-class PageTwo(tk.Frame):
+class EmployeePage(tk.Frame):
 
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.controller = controller
-        label = tk.Label(self, text="This is page 2")
-        label.pack(side="top", fill="x", pady=10)
-        button = tk.Button(self, text="Go to the start page",
+        self.configure(bg="light blue")
+        button = tk.Button(self, text="Log Out", width=10, height=2, bg="royal blue", borderwidth=0,
                            command=lambda: controller.show_frame("StartPage"))
         button.pack()
 
@@ -68,4 +69,5 @@ if __name__ == "__main__":
     app = SampleApp()
     app.geometry("1280x720")
     app.title("Employee Database")
+    app.resizable(False, False)
     app.mainloop()
