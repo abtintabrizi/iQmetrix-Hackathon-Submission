@@ -51,7 +51,7 @@ class EmployerPage(tk.Frame):
         self.configure(bg="light blue")
         button = tk.Button(self, text="Log Out", width=10, height=2, bg="royal blue", borderwidth=0,
                            command=lambda: controller.show_frame("StartPage"))
-        button.pack()
+        button.grid(row=0, column=0)
 
 
 class EmployeePage(tk.Frame):
@@ -62,8 +62,7 @@ class EmployeePage(tk.Frame):
         self.configure(bg="light blue")
         button = tk.Button(self, text="Log Out", width=10, height=2, bg="royal blue", borderwidth=0,
                            command=lambda: controller.show_frame("StartPage"))
-        button.pack()
-
+        button.grid(row=0, column=0)
 
 if __name__ == "__main__":
     app = SampleApp()
