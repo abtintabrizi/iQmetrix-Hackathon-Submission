@@ -71,3 +71,6 @@ if __name__ == "__main__":
     app.title("Employee Database")
     app.resizable(False, False)
     app.mainloop()
+    
+    
+ edit
