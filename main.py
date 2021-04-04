@@ -1,5 +1,6 @@
-import tkinter as tk             
+import tkinter as tk
 from tkinter import font as tkfont
+
 
 class SampleApp(tk.Tk):
 
@@ -10,7 +11,8 @@ class SampleApp(tk.Tk):
         container.grid_rowconfigure(0, weight=1)
         container.grid_columnconfigure(0, weight=1)
 
-        self.title_font = tkfont.Font(family='Helvetica', size=18, weight="bold")
+        self.title_font = tkfont.Font(
+            family='Helvetica', size=18, weight="bold")
 
         self.frames = {}
         for F in (StartPage, EmployerPage, EmployeePage):
@@ -32,15 +34,15 @@ class StartPage(tk.Frame):
         tk.Frame.__init__(self, parent)
         self.controller = controller
         self.configure(bg="light blue")
-        label = tk.Label(self, text="Employee Database", font=controller.title_font, bg="light blue")
-        label.pack(side="top", pady=75)
-
-        button1 = tk.Button(self, text="Log In", width=40, height=4, bg="royal blue", borderwidth=0,
+        label = tk.Label(self, text="Employee Database",
+                         font=controller.title_font, bg="light blue")
+        label.place(anchor="n", relx=0.5, rely=0.05)
+        button1 = tk.Button(self, text="Employer", width=40, height=4, bg="royal blue", borderwidth=0,
                             command=lambda: controller.show_frame("EmployerPage"))
-        button2 = tk.Button(self, text="Sign Up", width=40, height=4, bg="royal blue", borderwidth=0,
+        button2 = tk.Button(self, text="Employee", width=40, height=4, bg="royal blue", borderwidth=0,
                             command=lambda: controller.show_frame("EmployeePage"))
-        button1.pack(pady=(0, 75))
-        button2.pack()
+        button1.place(relwidth=0.5, relheight=0.25, relx=0.25, rely=0.25)
+        button2.place(relwidth=0.5, relheight=0.25, relx=0.25, rely=0.6)
 
 
 class EmployerPage(tk.Frame):
@@ -49,9 +51,9 @@ class EmployerPage(tk.Frame):
         tk.Frame.__init__(self, parent)
         self.controller = controller
         self.configure(bg="light blue")
-        button = tk.Button(self, text="Log Out", width=10, height=2, bg="royal blue", borderwidth=0,
+        button = tk.Button(self, text="Log Out", bg="royal blue", borderwidth=0,
                            command=lambda: controller.show_frame("StartPage"))
-        button.grid(row=0, column=0)
+        button.place(relheight=0.1, relwidth=0.1)
 
 
 class EmployeePage(tk.Frame):
@@ -60,9 +62,10 @@ class EmployeePage(tk.Frame):
         tk.Frame.__init__(self, parent)
         self.controller = controller
         self.configure(bg="light blue")
-        button = tk.Button(self, text="Log Out", width=10, height=2, bg="royal blue", borderwidth=0,
+        button = tk.Button(self, text="Log Out", bg="royal blue", borderwidth=0,
                            command=lambda: controller.show_frame("StartPage"))
-        button.grid(row=0, column=0)
+        button.place(relheight=0.1, relwidth=0.1)
+
 
 if __name__ == "__main__":
     app = SampleApp()
