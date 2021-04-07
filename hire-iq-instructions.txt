@@ -1,5 +1,5 @@
-1. Extract Files
-2. Open main.exe file
+1. Download the entire main file from Google Drive
+2. Find and open the main.exe file
 
 This should open up the app. Once the app is open, follow the steps below.
 
