@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import font as tkfont
-from tkinter import filedialog, asksaveasfile
+from tkinter import filedialog, Canvas
 
 
 class SampleApp(tk.Tk):
@@ -16,7 +16,7 @@ class SampleApp(tk.Tk):
             family='Helvetica', size=18, weight="bold")
 
         self.frames = {}
-        for F in (StartPage, EmployerPage, EmployeePage, ViewFilesPage, AddFilePage):
+        for F in (StartPage, EmployerPage, EmployeePage, ViewFilesPage, AddFilePage, SentOffersPage, FilterPage):
             page_name = F.__name__
             frame = F(parent=container, controller=self)
             self.frames[page_name] = frame
@@ -52,9 +52,39 @@ class EmployerPage(tk.Frame):
         tk.Frame.__init__(self, parent)
         self.controller = controller
         self.configure(bg="light blue")
-        button = tk.Button(self, text="Log Out", bg="royal blue", borderwidth=0,
-                           command=lambda: controller.show_frame("StartPage"))
-        button.place(relheight=0.1, relwidth=0.1)
+        title = tk.Label(self, text="Employee Database",
+                         font=controller.title_font, bg="light blue")
+        title.place(x=600, y=70)
+        log_out = tk.Button(self, text="Exit", width=10, height=2, bg="royal blue", borderwidth=0,
+                            command=lambda: controller.show_frame("StartPage"))
+        log_out.grid(row=0, column=0)
+        sent_offers = tk.Button(self, text="Sent Offers", width=10, height=2, bg="royal blue", borderwidth=0,
+                                command=lambda: controller.show_frame("SentOffersPage"))
+        sent_offers.place(x=1205, y=0)
+        filter_bt = tk.Button(self, text="Filter", width=10, height=2, bg="royal blue", borderwidth=0,
+                            command=lambda: controller.show_frame("FilterPage"))
+        filter_bt.place(x=100, y=80)
+
+class SentOffersPage(tk.Frame):
+
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
+        self.controller = controller
+        self.configure(bg = "light blue")
+        back = tk.Button(self, text="Back", width=10, height=2, bg="royal blue", borderwidth=0,
+                            command=lambda: controller.show_frame("EmployerPage"))
+        back.grid(row=0, column=0)
+
+
+class FilterPage(tk.Frame):
+
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
+        self.controller = controller
+        self.configure(bg = "light blue")
+        back = tk.Button(self, text="Back", width=10, height=2, bg="royal blue", borderwidth=0,
+                            command=lambda: controller.show_frame("EmployerPage"))
+        back.grid(row=0, column=0)
 
 
 class EmployeePage(tk.Frame):
@@ -83,12 +113,19 @@ class EmployeePage(tk.Frame):
             relwidth=0.25, relheight=0.33, relx=0.7, rely=0.33)
 
 
+fileList = []
+
 class ViewFilesPage(tk.Frame):
 
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.controller = controller
         self.configure(bg="light blue")
+        canvas = Canvas(self)
+        canvas.configure(bg="light blue", highlightthickness=0)
+        canvas.create_line(25, 80, 500, 80)
+        canvas.create_line(225, 25, 225, 900)
+        canvas.place(relx=0.37, rely=0.2, relwidth=0.35, relheight=0.5)
         button = tk.Button(self, text="Back", bg="royal blue", borderwidth=0,
                            command=lambda: controller.show_frame("EmployeePage"))
         button.place(relheight=0.1, relwidth=0.1)
@@ -98,6 +135,19 @@ class ViewFilesPage(tk.Frame):
         addFileButton = tk.Button(self, text="Add File", bg="royal blue", borderwidth=0,
                                   command=lambda: controller.show_frame("AddFilePage"))
         addFileButton.place(relx=0.45, rely=0.8, relwidth=0.2, relheight=0.1)
+        tk.Label(self, text="File Name", font=controller.title_font, bg="light blue").place(relx=0.43, rely=0.25)
+        tk.Label(self, text="Download", font=controller.title_font, bg="light blue").place(relx=0.57, rely=0.25)
+        refreshButton = tk.Button(self, text="refresh", width=10, height=2, bg="royal blue", borderwidth=0,
+                                command=self.refresh)
+        refreshButton.place(x=1205, y=0)
+
+    def refresh(self):
+        y = 0.35
+        for x in range(len(fileList)):
+            tk.Label(self, text=fileList[x], bg="light blue").place(relx=0.45, rely=y)
+            tk.Button(self, text="Download", bg="white", borderwidth=0).place(relx=0.57, rely=y, relwidth=0.1, relheight=0.05)
+            y = y + 0.1
+        
 
 
 class AddFilePage(tk.Frame):
@@ -116,16 +166,15 @@ class AddFilePage(tk.Frame):
                                  command=self.get).place(relx=0.45, rely=0.8, relwidth=0.2, relheight=0.1)
         attachButton = tk.Button(self, text="Attach", bg="royal blue", borderwidth=0,
                                  command=self.attachAction).place(relx=0.45, rely=0.5, relwidth=0.2, relheight=0.1)
-
         self.name = tk.Entry(self)
-        self.name.place(relx=0.5, rely=0.35)
+        self.name.place(relx=0.45, rely=0.33, relwidth=0.2, relheight=0.1)
 
     def get(self):
-        print(self.name.get())
+        filename = self.name.get()
+        fileList.append(filename)
 
     def attachAction(event=None):
         filename = filedialog.askopenfilename(initialdir="/", title="Select a File", filetypes=(("Text files", "*.txt*"), ("all files","*.*")))
-        print(filename)
 
 
 if __name__ == "__main__":
