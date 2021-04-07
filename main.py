@@ -76,7 +76,7 @@ class EmployerPage(tk.Frame):
         self.configure(bg="light blue")
         title = tk.Label(self, text="Employee Database",
                          font=controller.title_font, bg="light blue")
-        title.place(x=600, y=70)
+        title.place(relx=0.4, rely=0.05)
         log_out = tk.Button(self, text="Exit", width=10, height=2, bg="royal blue", borderwidth=0,
                             command=lambda: controller.show_frame("StartPage"))
         log_out.grid(row=0, column=0)
@@ -86,6 +86,68 @@ class EmployerPage(tk.Frame):
         filter_bt = tk.Button(self, text="Filter", width=10, height=2, bg="royal blue", borderwidth=0,
                             command=lambda: controller.show_frame("FilterPage"))
         filter_bt.place(x=100, y=80)
+
+        canvas = Canvas(self)
+        canvas.configure(bg="light blue", highlightthickness=0)
+        canvas.create_line(25, 80, 1050, 80)
+        canvas.create_line(225, 25, 225, 900)
+        canvas.create_line(400, 25, 400, 900)
+        canvas.create_line(600, 25, 600, 900)
+        canvas.create_line(820, 25, 820, 900)
+        canvas.place(relx=0.08, rely=0.2, relwidth=1, relheight=1)
+        tk.Label(self, text="Name", font=controller.title_font, bg="light blue").place(relx=0.15, rely=0.25)
+        tk.Label(self, text="City", font=controller.title_font, bg="light blue").place(relx=0.30, rely=0.25)
+        tk.Label(self, text="Job", font=controller.title_font, bg="light blue").place(relx=0.45, rely=0.25)
+        tk.Label(self, text="Profile", font=controller.title_font, bg="light blue").place(relx=0.60, rely=0.25)
+        tk.Label(self, text="Send Offer", font=controller.title_font, bg="light blue").place(relx=0.75, rely=0.25)
+
+        self.city = tk.Entry(self)
+        self.city.place(x=500, y=80, relwidth=0.15, relheight=0.05)
+        self.job = tk.Entry(self)
+        self.job.place(x=800, y=80, relwidth=0.15, relheight=0.05)
+        filter_city = tk.Button(self, text="Filter City", width=10, height=2, bg="royal blue", borderwidth=0,
+                                command=self.refreshCity)
+        filter_city.place(x=400, y=80)
+        filter_job = tk.Button(self, text="Filter Job", width=10, height=2, bg="royal blue", borderwidth=0,
+                                command=self.refreshJob)
+        filter_job.place(x=700, y=80)
+        
+
+    def refreshCity(self):
+        self.clear()
+        field = self.city.get()
+        emps = getEmpsByCity(field) 
+        y = 0.35
+        for x in range(len(emps)):
+            tk.Label(self, text=emps[x][0], bg="light blue").place(relx=0.15, rely=y)
+            tk.Label(self, text=emps[x][1], bg="light blue").place(relx=0.30, rely=y)
+            tk.Label(self, text=emps[x][2], bg="light blue").place(relx=0.45, rely=y)
+            tk.Button(self, text="View", bg="white", borderwidth=0).place(relx=0.6, rely=y, relwidth=0.1, relheight=0.05)
+            tk.Button(self, text="Send", bg="white", borderwidth=0).place(relx=0.75, rely=y, relwidth=0.1, relheight=0.05)
+            y = y + 0.07
+
+    def refreshJob(self):
+        self.clear()
+        field = self.job.get()
+        emps = getEmpsByJob(field)
+        y = 0.35
+        for x in range(len(emps)):
+            tk.Label(self, text=emps[x][0], bg="light blue").place(relx=0.15, rely=y)
+            tk.Label(self, text=emps[x][1], bg="light blue").place(relx=0.30, rely=y)
+            tk.Label(self, text=emps[x][2], bg="light blue").place(relx=0.43, rely=y)
+            tk.Button(self, text="View", bg="white", borderwidth=0).place(relx=0.57, rely=y, relwidth=0.1, relheight=0.05)
+            tk.Button(self, text="Send", bg="white", borderwidth=0).place(relx=0.75, rely=y, relwidth=0.1, relheight=0.05)
+            y = y + 0.07
+
+    def clear(self):
+        canvas = Canvas(self)
+        canvas.configure(bg="light blue", highlightthickness=0)
+        canvas.create_line(25, 5, 1050, 5)
+        canvas.create_line(225, 0, 225, 900)
+        canvas.create_line(400, 0, 400, 900)
+        canvas.create_line(600, 0, 600, 900)
+        canvas.create_line(820, 0, 820, 900)
+        canvas.place(relx=0.08, rely=0.3, relwidth=1, relheight=1)
 
 
 class SentOffersPage(tk.Frame):
