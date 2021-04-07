@@ -16,7 +16,7 @@ class SampleApp(tk.Tk):
             family='Helvetica', size=18, weight="bold")
 
         self.frames = {}
-        for F in (StartPage, EmployerPage, EmployeePage, ViewFilesPage, AddFilePage, SentOffersPage, FilterPage):
+        for F in (StartPage, EmployerPage, EmployeePage, ViewFilesPage, AddFilePage, SentOffersPage, FilterPage, SkillsProfilePage):
             page_name = F.__name__
             frame = F(parent=container, controller=self)
             self.frames[page_name] = frame
@@ -65,6 +65,7 @@ class EmployerPage(tk.Frame):
                             command=lambda: controller.show_frame("FilterPage"))
         filter_bt.place(x=100, y=80)
 
+
 class SentOffersPage(tk.Frame):
 
     def __init__(self, parent, controller):
@@ -104,7 +105,7 @@ class EmployeePage(tk.Frame):
         offerHistoryButton.place(
             relwidth=0.25, relheight=0.33, relx=0.1, rely=0.33)
         skillsProfileButton = tk.Button(self, text="Skills Profile", bg="royal blue", borderwidth=0,
-                                        command=lambda: controller.show_frame("StartPage"))
+                                        command=lambda: controller.show_frame("SkillsProfilePage"))
         skillsProfileButton.place(
             relwidth=0.25, relheight=0.33, relx=0.4, rely=0.33)
         viewFilesButton = tk.Button(self, text="View Files", bg="royal blue", borderwidth=0,
@@ -149,7 +150,6 @@ class ViewFilesPage(tk.Frame):
             y = y + 0.1
         
 
-
 class AddFilePage(tk.Frame):
 
     def __init__(self, parent, controller):
@@ -176,6 +176,37 @@ class AddFilePage(tk.Frame):
     def attachAction(event=None):
         filename = filedialog.askopenfilename(initialdir="/", title="Select a File", filetypes=(("Text files", "*.txt*"), ("all files","*.*")))
 
+
+class SkillsProfilePage(tk.Frame):
+
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
+        self.controller = controller
+        self.configure(bg="light blue")
+        button = tk.Button(self, text="Back", bg="royal blue", borderwidth=0,
+                           command=lambda: controller.show_frame("EmployeePage")).place(relheight=0.1, relwidth=0.1)
+        title = tk.Label(self, text="Skills Profile", font=controller.title_font,
+                         bg="light blue").place(relx=0.5, rely=0.05)
+        uploadButton = tk.Button(self, text="Upload", bg="royal blue", borderwidth=0).place(relx=0.45, rely=0.8, relwidth=0.2, relheight=0.1)
+        tk.Label(self, text="Name", font=controller.title_font,
+                 bg="light blue").place(relx=0.35, rely=0.35)
+        tk.Label(self, text="City", font=controller.title_font,
+                 bg="light blue").place(relx=0.35, rely=0.45)
+        tk.Label(self, text="jobs", font=controller.title_font,
+                 bg="light blue").place(relx=0.35, rely=0.55)
+        self.name = tk.Entry(self)
+        self.name.place(relx=0.45, rely=0.33, relwidth=0.2, relheight=0.1)
+        self.city = tk.Entry(self)
+        self.city.place(relx=0.45, rely=0.43, relwidth=0.2, relheight=0.1)
+        self.jobs = tk.Entry(self)
+        self.jobs.place(relx=0.45, rely=0.53, relwidth=0.2, relheight=0.1)
+
+
+class Employee:
+    def __init__(self, name, city, job):
+        self.name = name
+        self.city = city
+        self.job = job
 
 if __name__ == "__main__":
     app = SampleApp()
