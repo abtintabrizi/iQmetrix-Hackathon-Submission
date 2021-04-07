@@ -1,7 +1,29 @@
+import sqlite3
 import tkinter as tk
 from tkinter import font as tkfont
 from tkinter import filedialog, Canvas
-from sqlit
+
+conn = sqlite3.connect(':memory:')
+c = conn.cursor()
+
+c.execute("""CREATE TABLE employees (
+            name text,
+            city text,
+            job text
+            )""")
+
+def insertEmp(emp):
+    with conn:
+        c.execute("INSERT INTO employees VALUES (:name, :city, :job)", {'name': emp.name, 'city': emp.city, 'job': emp.job})
+
+def getEmpsByCity(city):
+    c.execute("SELECT * FROM employees WHERE city=:city", {'city': city})
+    return c.fetchall()
+
+def getEmpsByJob(job):
+    c.execute("SELECT * FROM employees WHERE job=:job", {'job': job})
+    return c.fetchall()
+
 
 class SampleApp(tk.Tk):
 
@@ -116,6 +138,7 @@ class EmployeePage(tk.Frame):
 
 fileList = []
 
+
 class ViewFilesPage(tk.Frame):
 
     def __init__(self, parent, controller):
@@ -187,12 +210,12 @@ class SkillsProfilePage(tk.Frame):
                            command=lambda: controller.show_frame("EmployeePage")).place(relheight=0.1, relwidth=0.1)
         title = tk.Label(self, text="Skills Profile", font=controller.title_font,
                          bg="light blue").place(relx=0.5, rely=0.05)
-        uploadButton = tk.Button(self, text="Upload", bg="royal blue", borderwidth=0).place(relx=0.45, rely=0.8, relwidth=0.2, relheight=0.1)
+        updateButton = tk.Button(self, text="Update", bg="royal blue", borderwidth=0, command=self.createEmp).place(relx=0.45, rely=0.8, relwidth=0.2, relheight=0.1)
         tk.Label(self, text="Name", font=controller.title_font,
                  bg="light blue").place(relx=0.35, rely=0.35)
         tk.Label(self, text="City", font=controller.title_font,
                  bg="light blue").place(relx=0.35, rely=0.45)
-        tk.Label(self, text="jobs", font=controller.title_font,
+        tk.Label(self, text="Jobs", font=controller.title_font,
                  bg="light blue").place(relx=0.35, rely=0.55)
         self.name = tk.Entry(self)
         self.name.place(relx=0.45, rely=0.33, relwidth=0.2, relheight=0.1)
@@ -201,6 +224,13 @@ class SkillsProfilePage(tk.Frame):
         self.job = tk.Entry(self)
         self.job.place(relx=0.45, rely=0.53, relwidth=0.2, relheight=0.1)
 
+    def createEmp(self):
+        name = self.name.get()
+        city = self.city.get()
+        job = self.job.get()
+        emp = Employee(name, city, job)
+        insertEmp(emp)
+
 
 class Employee:
     def __init__(self, name, city, job):
@@ -208,9 +238,13 @@ class Employee:
         self.city = city
         self.job = job
 
+
 if __name__ == "__main__":
     app = SampleApp()
     app.geometry("1280x720")
     app.title("Employee Database")
     app.resizable(False, False)
     app.mainloop()
+
+
+conn.close()
