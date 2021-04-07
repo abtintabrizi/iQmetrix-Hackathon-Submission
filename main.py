@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import font as tkfont
 from tkinter import filedialog, Canvas
-
+from sqlit
 
 class SampleApp(tk.Tk):
 
@@ -198,8 +198,8 @@ class SkillsProfilePage(tk.Frame):
         self.name.place(relx=0.45, rely=0.33, relwidth=0.2, relheight=0.1)
         self.city = tk.Entry(self)
         self.city.place(relx=0.45, rely=0.43, relwidth=0.2, relheight=0.1)
-        self.jobs = tk.Entry(self)
-        self.jobs.place(relx=0.45, rely=0.53, relwidth=0.2, relheight=0.1)
+        self.job = tk.Entry(self)
+        self.job.place(relx=0.45, rely=0.53, relwidth=0.2, relheight=0.1)
 
 
 class Employee:
