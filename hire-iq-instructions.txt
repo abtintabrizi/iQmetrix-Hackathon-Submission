@@ -12,13 +12,13 @@ This should open up the app. Once the app is open, follow the steps below.
 9. Enter the desired name of the file in the field and press attach. Click upload to add the file to the list of files. (The file won't be actually uploaded, do this for each file)
 10. Click Back.
 11. Click Refresh to see a list of uploaded files
-11. Click Back.
-12. Click Exit
-12. Now, click on the Employer button. 
-13. Search/filter for employees by inputting a key word in the 'filter city' box or 'filter job' box. The input is case sensitive.
-14. Then, click on the corresponding button for the field to see a list of employees with matching fields that you previously added.
-15. Click Exit to return to home page.
-16. Close the application.
+12. Click Back.
+13. Click Exit
+14. Now, click on the Employer button. 
+15. Search/filter for employees by inputting a key word in the 'filter city' box or 'filter job' box. The input is case sensitive.
+16. Then, click on the corresponding button for the field to see a list of employees with matching fields that you previously added.
+17. Click Exit to return to home page.
+18. Close the application.
 
 *Note, the database of employees and files resets each time the application is run
 **In reality, the starting page would require logging in or singing nup but for convenience we decided to let you access the employee/employer sections directly
