@@ -122,7 +122,7 @@ class EmployerPage(tk.Frame):
             tk.Label(self, text=emps[x][0], bg="light blue").place(relx=0.15, rely=y)
             tk.Label(self, text=emps[x][1], bg="light blue").place(relx=0.30, rely=y)
             tk.Label(self, text=emps[x][2], bg="light blue").place(relx=0.45, rely=y)
-            tk.Button(self, text="View", bg="white", borderwidth=0).place(relx=0.6, rely=y, relwidth=0.1, relheight=0.05)
+            tk.Button(self, text="View", bg="white", borderwidth=0).place(relx=0.58, rely=y, relwidth=0.1, relheight=0.05)
             tk.Button(self, text="Send", bg="white", borderwidth=0).place(relx=0.75, rely=y, relwidth=0.1, relheight=0.05)
             y = y + 0.07
 
@@ -178,7 +178,7 @@ class EmployeePage(tk.Frame):
         tk.Frame.__init__(self, parent)
         self.controller = controller
         self.configure(bg="light blue")
-        button = tk.Button(self, text="Log Out", bg="royal blue", borderwidth=0,
+        button = tk.Button(self, text="Exit", bg="royal blue", borderwidth=0,
                            command=lambda: controller.show_frame("StartPage"))
         button.place(relheight=0.1, relwidth=0.1)
         title = tk.Label(self, text="Profile",
